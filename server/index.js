@@ -22,6 +22,7 @@ io.on('connection', (socket) => {
 
         socket.broadcast.emit('message', {
             ...user,
+            username: '',
             message: `${user.username} has joined chat!`,
         });
     });
@@ -36,8 +37,8 @@ io.on('connection', (socket) => {
             return user.clientId !== clientId;
         });
         io.emit('message', {
-            username: disconnectedUser.username,
-            clientId: disconnectedUser.clientId,
+            ...disconnectedUser,
+            username: '',
             message: `${disconnectedUser.username} has left chat!`,
         });
         io.emit('updateUsers', users);
